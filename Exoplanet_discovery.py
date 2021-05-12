@@ -182,8 +182,8 @@ elif categorie == "Observer les Exoplanètes":
                 x = "disc_year" ,
                 color = "discoverymethod",
                 title= "<b>Le nombre de planètes découvertes par années et par méthodes</b>",
-                color_discrete_sequence='Dark24',
                 nbins = 10,
+                color_discrete_sequence= px.colors.sequential.Agsunset_r,
                 labels="Méthode de découverte")
     fig.update_layout(
         xaxis_title = "Années de découverte",
