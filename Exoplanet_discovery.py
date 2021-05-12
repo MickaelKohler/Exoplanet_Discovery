@@ -113,7 +113,7 @@ if categorie == 'Accueil':
             decad_disc.iloc[i, 1] = (((decad_disc.iloc[i, 0] - decad_disc.iloc[i-1, 0]) / decad_disc.iloc[i-1, 0]) * 100).round()
 
         fig = px.bar(decad_disc, x=decad_disc.index, y="Découvertes", 
-                     title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation')
+                     title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation',continuous_color_scale="Viridis")
         fig.update_traces(texttemplate='%{text:.2s}%')
         fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
                       xaxis=dict(title=None),
@@ -144,6 +144,7 @@ if categorie == 'Accueil':
                  caption="Ceci n'est pas une exoplanète")
 
     expander = st.beta_expander("Les technologies utilisées")
+    expander.write('Plusieurs librairies de _Python_ ont été utilisées pour la réalisation de ce site : ')
     col1, col2, col3, col4 = expander.beta_columns(4)
     with col1:
         st.write('Gestion des base de données')
@@ -153,7 +154,7 @@ if categorie == 'Accueil':
         st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1200px-Scikit_learn_logo_small.svg.png')
     with col3:
         st.write('Création des graphiques')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1200px-Plotly-logo-01-square.png')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/logo_plotly.png')
     with col4:
         st.write('Création de la WebApp')
         st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1*u9U3YjxT9c9A1FIaDMonHw.png')
@@ -182,7 +183,8 @@ elif categorie == "Observer les Exoplanètes":
                 color = "discoverymethod",
                 title= "<b>Le nombre de planètes découvertes par années et par méthodes</b>",
                 color_discrete_sequence= px.colors.sequential.Oryel_r,
-                nbins = 10)
+                nbins = 10
+                labels=)
     fig.update_layout(
         xaxis_title = "Années de découverte",
         yaxis_title = "Nombre d'Exoplanet"
@@ -206,7 +208,7 @@ elif categorie == "Observer les Exoplanètes":
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
     """)
 
-    col1, col2, col3 = st.beta_columns([3, 1])
+    col1, col2, col3 = st.beta_columns([1, 3, 1])
     with col2:
         st.markdown("![Alt Text](https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif)")
 
