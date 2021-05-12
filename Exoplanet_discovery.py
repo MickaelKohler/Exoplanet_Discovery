@@ -110,7 +110,7 @@ if categorie == 'Accueil':
         decad_disc = temp_tab[['pl_name']].rename(columns={'pl_name':'Découvertes'})
         decad_disc['Augmentation'] = ''
         for i in range(1,5):
-            decad_disc.iloc[i, 2] = (((decad_disc.iloc[i, 0] - decad_disc.iloc[i-1, 0]) / decad_disc.iloc[i-1, 0]) * 100).round()
+            decad_disc.iloc[i, 1] = (((decad_disc.iloc[i, 0] - decad_disc.iloc[i-1, 0]) / decad_disc.iloc[i-1, 0]) * 100).round()
 
         fig = px.bar(decad_disc, x=decad_disc.index, y=["Découvertes", "Prévisionnel"], title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation')
         fig.update_traces(texttemplate='%{text:.2s}%')
@@ -196,7 +196,7 @@ elif categorie == "Observer les Exoplanètes":
     ___Qu'est ce que la méthode des vitesses radiales___
 
     La force de gravité des planètes modifie le déplacement de leur étoile.
-    Les capteurs situés sur Terre vont détécter des spectres passant d'une couleur bleu à une couleur rouge. 
+    Les capteurs situés sur Terre vont détecter des spectres passant d'une couleur bleu à une couleur rouge. 
     Le décalage de temps durant le changement de couleurs permet de déduire des paramètres physiques comme la vitesse, la masse et la distance.
     
     ___Et la méthode la méthode du transit ?___
@@ -205,8 +205,7 @@ elif categorie == "Observer les Exoplanètes":
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
     """)
 
-    """### gif from local file"""
-    file = open("/home/rzwitch/Desktop/giphy.gif", "rb")
+    file = open("https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif", "rb")
     contents = file.read()
     dataurl = base64.b64encode(contents).decode("utf-8")
     file.close()
