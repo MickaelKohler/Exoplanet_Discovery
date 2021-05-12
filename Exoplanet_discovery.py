@@ -213,7 +213,9 @@ elif categorie == "Observer les Exoplanètes":
 
     st.markdown("""
 
-    Ces méthodes nécessitent des équipements adaptées
+    Ces méthodes peuvent être appliquées sur Terre mais aussi directement depuis l'espace. 
+    Elles nécessitent l'utilsation d'équipement spécifiques capable de détéctée les spectres lumineux des étoiles.
+    
 
     """)
 
@@ -615,7 +617,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     with col1:
         st.markdown(
             """
-            __Cliquez sur le bouton ci-dessous pour rechercher de nouvelles planètes 
+            __Cliquez sur le bouton ci-dessous__ pour rechercher de nouvelles planètes 
             ayant le potentielle d'être habitable. 
             """
         )
@@ -634,12 +636,12 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     with col2:
         if ML_off:
             display_tab = df_final.copy()
-            display_tab['Prédictions'] = ' '
+            display_tab['Prédiction'] = ' '
             st.dataframe(display_tab, height=550)
         else:
             st.dataframe(df_final, height=550)
 
-    expander = st.beta_expander("Explication du modèle")
+    expander = st.beta_expander("Explication du modèle retenu")
     expander.markdown(
         """
         __Quel modèle a été retenu ?__
