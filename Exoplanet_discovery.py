@@ -147,16 +147,16 @@ if categorie == 'Accueil':
     col1, col2, col3, col4 = expander.beta_columns(4)
     with col1:
         st.write('Gestion des base de données')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/tool_pandas.png')
     with col2:
         st.write('Création du modèle de ML')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+        st.image('https://github.com/MickaelKohler/Exoplanet_Discovery/blob/main/Ressources/1200px-Scikit_learn_logo_small.svg.png')
     with col3:
         st.write('Création des graphiques')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+        st.image('https://github.com/MickaelKohler/Exoplanet_Discovery/blob/main/Ressources/1200px-Plotly-logo-01-square.png')
     with col4:
         st.write('Création de la WebApp')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1*u9U3YjxT9c9A1FIaDMonHw.png')
 
     col1, col2 = expander.beta_columns([7, 1])
     with col2:
@@ -206,7 +206,9 @@ elif categorie == "Observer les Exoplanètes":
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
     """)
 
-    st.markdown("![Alt Text](https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif)")
+    col1, col2, col3 = st.beta_columns([3, 1])
+    with col2:
+        st.markdown("![Alt Text](https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif)")
 
     
 
@@ -261,6 +263,7 @@ elif categorie == "Observer les Exoplanètes":
     with col1:
         st.plotly_chart(fig, use_container_width=True) 
     with col2:
+         st.title('')
          st.markdown("""
 
          En 2019, l'engin spatial Kepler est envoyé en orbite avec l'objectif de recenser les planètes similaire à la Terre.
