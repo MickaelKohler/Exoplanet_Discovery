@@ -214,6 +214,8 @@ elif categorie == "Observer les Exoplanètes":
 
     st.markdown("""
 
+    La méthode de la vitesse radiale
+
     """)
 
 
@@ -559,6 +561,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     # Selecting main categorical columns
     df_exoplanet_cat = df_exoplanet_vf[['pl_letter','discoverymethod','disc_locale']]
 
+    st.write('test 1')
     # setting them into numerical value using factorization
     df_exoplanet_cat['pl_letter'] = df_exoplanet_cat['pl_letter'].factorize()[0]
     df_exoplanet_cat['discoverymethod'] = df_exoplanet_cat['discoverymethod'].factorize()[0]
@@ -574,6 +577,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     # filling missing values with the mean of each column
     df_exoplanet_rf_1.fillna(df_exoplanet_rf_1.mean(), inplace=True)
 
+    st.write('test 2')
     # starting ML with XGboost
     y = df_exoplanet_rf_1["P_HABITABLE"]
     X = df_exoplanet_rf_1.drop("P_HABITABLE", axis=1)
@@ -587,6 +591,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     # making prediction on unknown dataset
     df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
 
+    st.write('test 3')
     df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]
     df_final = pd.merge(df_test, df_exoplanet_rf_2,left_index=True,right_index=True)
     df_final = df_final[['pl_name', 'discoverymehod', 'disc_year', 'predictions']]
