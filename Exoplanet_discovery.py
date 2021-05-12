@@ -108,11 +108,9 @@ if categorie == 'Accueil':
 
         temp_tab = planets.groupby((planets['disc_year'] // 10) * 10).count()
         decad_disc = temp_tab[['pl_name']].rename(columns={'pl_name':'Découvertes'})
-        decad_disc['Prévisionnel'] = 0
-        decad_disc.loc[2020, 'Prévisionnel'] = (decad_disc.loc[2020, 'Découvertes']*10)-decad_disc.loc[2020, 'Découvertes']
         decad_disc['Augmentation'] = ''
         for i in range(1,5):
-            decad_disc.iloc[i, 2] = ((((decad_disc.iloc[i, 0]+decad_disc.iloc[i, 1]) - (decad_disc.iloc[i-1, 0]+decad_disc.iloc[i-1, 1])) / (decad_disc.iloc[i-1, 0]+decad_disc.iloc[i-1, 1])) * 100).round()
+            decad_disc.iloc[i, 2] = (((decad_disc.iloc[i, 0] - decad_disc.iloc[i-1, 0]) / decad_disc.iloc[i-1, 0]) * 100).round()
 
         fig = px.bar(decad_disc, x=decad_disc.index, y=["Découvertes", "Prévisionnel"], title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation')
         fig.update_traces(texttemplate='%{text:.2s}%')
@@ -144,8 +142,22 @@ if categorie == 'Accueil':
         st.image("https://github.com/MickaelKohler/Exoplanet_Discovery/raw/main/Ressources/galaxy-red-green-illustration-wallpaper.png",
                  caption="Ceci n'est pas une exoplanète")
 
-    st.title(" ")
-    col1, col2 = st.beta_columns([7, 1])
+    expander = st.beta_expander("Les technologies utilisées")
+    col1, col2, col3, col4 = expander.beta_columns(4)
+    with col1:
+        st.write('Gestion des base de données')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+    with col2:
+        st.write('Création du modèle de ML')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+    with col3:
+        st.write('Création des graphiques')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+    with col4:
+        st.write('Création de la WebApp')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+
+    col1, col2 = expander.beta_columns([7, 1])
     with col2:
         st.title(" ")
         st.write('_une production_')
@@ -167,7 +179,7 @@ elif categorie == "Observer les Exoplanètes":
     fig = px.histogram(planets, 
                 x = "disc_year" ,
                 color = "discoverymethod",
-                title= "Le nombre de planètes découvertes par années et par méthodes",
+                title= "<b>Le nombre de planètes découvertes par années et par méthodes</b>",
                 color_discrete_sequence= px.colors.sequential.Oryel_r,
                 nbins = 10)
     fig.update_layout(
@@ -193,10 +205,22 @@ elif categorie == "Observer les Exoplanètes":
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
     """)
 
+    """### gif from local file"""
+    file = open("/home/rzwitch/Desktop/giphy.gif", "rb")
+    contents = file.read()
+    dataurl = base64.b64encode(contents).decode("utf-8")
+    file.close()
+
+    st.markdown(
+    f'<img src="data:image/gif;base64,{data_url}" alt="cat gif">',
+    unsafe_allow_html=True,
+    )
+    
+
     fig = px.scatter(
         data_frame = planets,
          x = "sy_disterr1" , y = "pl_orbper",
-         title = "Les méthodes utilisées en fonction de la période orbitale et de la distance à la Terre", 
+         title = "<b>Les méthodes utilisées en fonction de la période orbitale et de la distance à la Terre</b>", 
          color = 'discoverymethod',
      )
     fig.update_layout(
@@ -211,10 +235,12 @@ elif categorie == "Observer les Exoplanètes":
     )
     st.plotly_chart(fig, use_container_width=True) 
 
+    st.subheader("La contribution de Kepler dans la recherches d'exoplanètes")
     st.markdown("""
 
-    Ces méthodes peuvent être appliquées sur Terre mais aussi directement depuis l'espace. 
-    Elles nécessitent l'utilsation d'équipement spécifiques capable de détéctée les spectres lumineux des étoiles.
+    Les méthodes de détection des exoplanètes peuvent être appliquées sur Terre mais aussi directement depuis l'espace. 
+    Elles nécessitent l'utilisation d'équipement spécifiques capable d'enregistrer l'image des spectres lumineux.
+    Ces équipements peuvent aller du plus pointus aux simple télescope ou appareil photo.
     
 
     """)
@@ -231,7 +257,7 @@ elif categorie == "Observer les Exoplanètes":
         planets2, 
         x="disc_telescope", 
         color="discoverymethod",
-        title="Nombre de planètes détectées par type de téléscope"
+        title="<b>Nombre de planètes détectées par type de téléscope</b>"
     ).update_xaxes(categoryorder="total descending")
 
     fig.update_layout(
@@ -243,9 +269,12 @@ elif categorie == "Observer les Exoplanètes":
         st.plotly_chart(fig, use_container_width=True) 
     with col2:
          st.markdown("""
+
          En 2019, l'engin spatial Kepler est envoyé en orbite avec l'objectif de recenser les planètes similaire à la Terre.
+         
          Il a été conçu pour utiliser la méthode des transits par l'intermédiaire d télescope de 0.98 mètre de diamètre équipé
          d'un détecteur mesurant l'intensité lumineuse des étoiles.
+
          La mission de Kepler s'est terminée en 2019 après la découverte record de plus de 2600 exoplanètes. 
         """)
 
@@ -562,7 +591,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
         exoplanètes découvertes à partir de début 2020. 
 
         Nous avons donc tenté d’entrainer un __algorithme de Machine Learning__ pour déterminer, 
-        selon les caractéristiques de chaque exoplanètes si elle peut être catégorisée comme habitable ou non, 
+        selon les caractéristiques de chaque exoplanète, si elle peut être catégorisée comme habitable ou non, 
         dans le but de catégoriser celles qui n’ont pas été identifiée.
         """
     )
@@ -644,7 +673,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     expander = st.beta_expander("Explication du modèle retenu")
     expander.markdown(
         """
-        __Quel modèle a été retenu ?__
+        ___Quel modèle a été retenu ?___
 
         Nous avons testé les algorithmes de classification les plus pertinents afin de prédire si une planète est habitable.
 
@@ -675,7 +704,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
 
     expander.markdown(
         """
-        __Qu'est-ce que le XGBoot ?__
+        ___Qu'est-ce que le XGBoot ?___
 
         XGBoot est la Extrême Gradient Boosted Trees, plus simplement il s'agit d'une forêt d'arbres de décision optimisée.
 
