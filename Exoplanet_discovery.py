@@ -144,7 +144,7 @@ if categorie == 'Accueil':
                  caption="Ceci n'est pas une exoplanète")
 
     expander = st.beta_expander("Les technologies utilisées")
-    # expander.write('Plusieurs librairies de _Python_ ont été utilisées pour la réalisation de ce site : ')
+    expander.write('Plusieurs librairies de _Python_ ont été utilisées pour la réalisation de ce site : ')
     col1, col2, col3, col4 = expander.beta_columns(4)
     with col1:
         st.write('Gestion des base de données')
