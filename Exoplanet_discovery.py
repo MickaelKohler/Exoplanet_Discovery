@@ -383,7 +383,7 @@ elif categorie == "Les Exoplanètes habitables":
         margin = dict(l=10, r=10, b=10, t=70))
     st.plotly_chart(fig, use_container_width=True)
 
-    expander = st.sidebar.beta_expander("Illustration de la zone habitable dans notre système solaire")
+    expander = st.beta_expander("Illustration de la zone habitable dans notre système solaire")
     expander.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/zone_habitable_systeme_solaire_espace_stellaire_1024x1024.jpg')
 
     st.markdown("---")
