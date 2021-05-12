@@ -609,12 +609,13 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
 
     df_final.rename(columns={'pl_name':"Nom de l'Exoplanète", 'discoverymethod_x':'Méthode utilisée', 'disc_year':'Découverte', 'predictions':'Prédiction'}, inplace=True)
     
+    st.title(' ')
     ML_off = True
     col1, col2 = st.beta_columns([1, 3])
     with col1:
         st.markdown(
             """
-            Cliquez sur le bouton ci-dessous pour rechercher de nouvelles planètes 
+            __Cliquez sur le bouton ci-dessous pour rechercher de nouvelles planètes 
             ayant le potentielle d'être habitable. 
             """
         )
@@ -641,6 +642,8 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     expander = st.beta_expander("Explication du modèle")
     expander.markdown(
         """
+        __Quel modèle a été retenu ?__
+
         Nous avons testé les algorithmes de classification les plus pertinents afin de prédire si une planète est habitable.
 
         Lors de ces tests, les algorithmes, ci-dessous, ont produit les résultats les plus proches de la réalités (scores), 
@@ -668,8 +671,10 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
 
     expander.plotly_chart(fig, use_container_width=True) 
 
-    st.markdown(
+    expander.markdown(
         """
+        __Qu'est-ce que le XGBoot ?__
+
         XGBoot est la Extrême Gradient Boosted Trees, plus simplement il s'agit d'une forêt d'arbres de décision optimisée.
 
         "Un arbre de décision est un outil d'aide à la décision représentant un ensemble de choix sous la forme graphique d'un arbre. 
