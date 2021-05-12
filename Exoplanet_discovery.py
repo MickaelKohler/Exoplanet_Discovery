@@ -115,7 +115,7 @@ if categorie == 'Accueil':
         fig = px.bar(decad_disc, x=decad_disc.index, y="Découvertes", 
                      title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation',color_discrete_sequence =['darkblue']*len(decad_disc))
         fig.update_traces(texttemplate='%{text:.2s}%')
-        fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
+        fig.update_layout(showlegend=True, font_family='IBM Plex Sans', title_x=0.5,
                       xaxis=dict(title="Pourcentage d'évolution d'une décénnie sur l'autre"),
                       yaxis=dict(title="Nombre d'exoplanètes découvertes"),
                       uniformtext_minsize=10, uniformtext_mode='hide',
