@@ -10,7 +10,7 @@ def load_df(url):
 
 # option
 st.set_page_config(page_title="Exoplanet Discovery",
-                   page_icon="🧊 ",
+                   page_icon="🧊",
                    layout="wide",
                    initial_sidebar_state="expanded")
 
@@ -66,15 +66,84 @@ plan_hab = load_df(phl_db)
 
 if categorie == 'Accueil':
     st.title('Exoplanet Discovery')
-    st.subheader('Donner de la vie à la data')
-    st.title(" ")
+    st.subheader('Notre mission : _Donner vie à la data_')
 
     st.markdown(
         """
+        Fermi était septique :
+
+        _« S'il y avait des civilisations extraterrestres, leurs représentants devraient être déjà chez nous. Où sont-ils donc ? »_
         
+        Si la question n'a pas de réponse, c'est le principe même de ce paradoxe, 
+        elle souligne tout de même la volonté qu'à l'homme de pouvoir rencontrer son alter-égo.
+
+        Si ce n'est pas des civilisations extraterrestres qui nous ont trouvé, alors c'est à nous de les chercher. 
+        Les pieds sur terre, la tête dans les étoiles. Nous scrutons le ciel pour trouver une terre qui nous ressemble. Ce sont les _Exoplanètes_.
         """
     )
 
+    col1, col2 = st.beta_columns(2)
+    with col1:
+        st.title(" ")
+        st.markdown(
+            """
+            Il faut attendre __1995 pour que la première exoplanète apparaisse__ devant nos yeux et 
+            relance la course à la recherche de la vie. Mars n’est plus le seul horizon. 
+            L’espoir se propage à présent jusqu’au confins de l’univers.
+
+            C’est aujourd’hui __4383 exoplanètes__ qui ont été découvertes. 
+
+            Dans ce total toutefois, seulement __moins de 1,5% sont considérées remplissant 
+            suffisamment de conditions pour accueillir une forme de vie__. 
+            """
+        )
+    with col2:
+
+        temp_tab = planets.groupby((planets['disc_year'] // 10) * 10).count()
+        decad_disc = temp_tab[['pl_name']].rename(columns={'pl_name':'Découvertes'})
+        decad_disc['Prévisionnel'] = 0
+        decad_disc.loc[2020, 'Prévisionnel'] = (decad_disc.loc[2020, 'Découvertes']*10)-decad_disc.loc[2020, 'Découvertes']
+        decad_disc['Augmentation'] = ''
+        for i in range(1,5):
+            decad_disc.iloc[i, 2] = ((((decad_disc.iloc[i, 0]+decad_disc.iloc[i, 1]) - (decad_disc.iloc[i-1, 0]+decad_disc.iloc[i-1, 1])) / (decad_disc.iloc[i-1, 0]+decad_disc.iloc[i-1, 1])) * 100).round()
+
+        fig = px.bar(decad_disc, x=decad_disc.index, y=["Découvertes", "Prévisionnel"], title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation')
+        fig.update_traces(texttemplate='%{text:.2s}%')
+        fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
+                      xaxis=dict(title=None),
+                      yaxis=dict(title="Nombre d'exoplanète découvertes"),
+                      uniformtext_minsize=10, uniformtext_mode='hide',
+                      margin=dict(l=40, r=70, b=70, t=70),
+                      plot_bgcolor='rgba(0,0,0,0)',
+                      legend=dict(
+                            x=0,
+                            y=0.96,
+                            traceorder="normal",
+                            bgcolor='rgba(0,0,0,0)',
+                            font=dict(
+                                size=12)))
+        st.plotly_chart(fig, use_container_width=True)
+    
+    st.markdown(
+        """
+        Nous vous proposons de partir ensemble pour un voyage dans les méandres de l’univers. 
+        Où les températures ardentes flirtent avec le zéro absolu et où le vide est la règle et la vie l’exception.
+
+        Partons ensemble à la rencontre des exoplanetes
+        """)
+
+    st.title(" ")
+    col1, col2, col3 = st.beta_columns([1, 4, 1])
+    with col2:
+        st.image("https://github.com/MickaelKohler/Exoplanet_Discovery/raw/main/Ressources/galaxy-red-green-illustration-wallpaper.png",
+                 caption="Ceci n'est pas une exoplanète")
+
+    st.title(" ")
+    col1, col2 = st.beta_columns([7, 1])
+    with col2:
+        st.title(" ")
+        st.write('_une production_')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
 
 
 
@@ -101,7 +170,7 @@ elif categorie == "Observer les Exoplanètes":
     st.plotly_chart(fig, use_container_width=True)
     
     st.markdown("""
-    
+
     __Qu'est ce que la méthode des vitesses radiales__
 
     La force de gravité des planètes modifie le déplacement de leur étoile.
@@ -133,7 +202,36 @@ elif categorie == "Observer les Exoplanètes":
     )
     st.plotly_chart(fig, use_container_width=True) 
 
-    
+    st.markdown("""
+
+    """)
+
+
+    # Groupe les objectifs photos et groupes les telescopes
+    planets2 = planets.copy()
+    planets2["disc_telescope"] = planets2["disc_telescope"].apply(lambda x : "Objectif photo" if str(x) == 'Canon 400mm f/2.8L' else x)
+    planets2["disc_telescope"] = planets2["disc_telescope"].apply(lambda x : "Objectif photo" if str(x) == 'Mamiya 645 80mm f/1.9' else x)
+    planets2["disc_telescope"] = planets2["disc_telescope"].apply(lambda x : "Objectif photo" if str(x) == 'Canon 200mm f/1.8L' else x)
+    planets2["disc_telescope"] = planets2["disc_telescope"].apply(lambda x : x if (str(x) == '0.95 m Kepler Telescope' or str(x) == 'Objectif photo') else "Telescope")
+
+    fig = px.histogram(
+        planets2, 
+        x="disc_telescope", 
+        color="discoverymethod",
+        title="Nombre de planètes détectées par type de téléscope"
+    ).update_xaxes(categoryorder="total descending")
+
+    fig.update_layout(
+        xaxis_title = "Type de telescope",
+        yaxis_title = "Nombre de planètes détéctées")
+
+    col1, col2 = st.beta_columns([2, 1])
+    with col1:
+        st.plotly_chart(fig, use_container_width=True) 
+    with col2:
+        st.empty()
+
+
 elif categorie == "Les Exoplanètes habitables":
     st.title('Les caractéristiques des Exoplanètes habitables')
     st.subheader('Où sont elles et quels sont leurs projets')
@@ -148,7 +246,7 @@ elif categorie == "Les Exoplanètes habitables":
         """
     )
 
-    # réparition des planetes
+    # réparition des planètes
     constelation = planets[planets['P_HABITABLE'].isin([1, 2])][['pl_name', 'hostname', 'S_CONSTELLATION']]
     constelation.dropna(inplace=True)
     fig =px.sunburst(
@@ -159,9 +257,25 @@ elif categorie == "Les Exoplanètes habitables":
     )
     fig.update_layout(
         title="<b>Où sont localisées les planètes habitables ?</b>",
-        margin = dict(l=10, r=10, b=10, t=30)
+        margin = dict(l=10, r=10, b=10, t=40)
     )
-    st.plotly_chart(fig, use_container_width=True)
+
+
+    col1, col2 = st.beta_columns([3, 1])
+    with col1:
+        st.plotly_chart(fig, use_container_width=True)
+    with col2:
+        st.title(" ")
+        st.markdown(
+            """
+            Le tableau interactif ci-contre vous présente la position de l’ensemble des exoplanète habitable.
+            Vous avez :
+            - _Sur le cercle intérieur_ : les constellations.
+            - _Sur le cercle extérieur_ : les systèmes solaire.
+            
+            Vous pouvez cliquer sur le système pour afficher les noms des exoplanètes habitables qui le composent. 
+            """
+            )
 
     planet_name = habit[habit.index == habit['sy_dist'].idxmin()].iloc[0,0]
     planet_distance = (habit['sy_dist'].min()*3.26156).round(2)
@@ -264,8 +378,19 @@ elif categorie == "Les Exoplanètes habitables":
     texts = [sType_tab["Exoplanètes"], sType_tab["Habitables"]]
     for i, t in enumerate(texts):
         fig.data[i].text = t
-    st.plotly_chart(fig, use_container_width=True)
-    
+
+
+
+    if show:
+        col1, col2 = st.beta_columns([1, 3])
+        with col2:
+            st.plotly_chart(fig, use_container_width=True)
+        with col1:
+            st.title(' ')
+            st.dataframe(sType_tab)
+    else:
+        st.plotly_chart(fig, use_container_width=True)
+   
     col1, col2 = st.beta_columns([1,2])
     with col1:
         st.markdown(
@@ -320,7 +445,17 @@ elif categorie == "Les Exoplanètes habitables":
     texts = [sAge_tab["Exoplanètes"], sAge_tab["Habitables"]]
     for i, t in enumerate(texts):
         fig.data[i].text = t
-    st.plotly_chart(fig, use_container_width=True)
+
+
+    if show:
+        col1, col2 = st.beta_columns([3, 1])
+        with col1:
+            st.plotly_chart(fig, use_container_width=True)
+        with col2:
+            st.title(' ')
+            st.dataframe(sAge_tab, height=360)
+    else:
+        st.plotly_chart(fig, use_container_width=True)
 
     st.markdown(
         """
@@ -369,19 +504,23 @@ elif categorie == "Les Exoplanètes habitables":
     with col1:
         st.plotly_chart(fig, use_container_width=True)
     with col2:
-        st.title(" ")
-        st.markdown(
-            """
-            Les type d'exoplanet selon
-            la masse de la terre (MT): 
-            - _Miniterran_ : -0,1 MT
-            - _Subterran_ : 0,1 à 0,5 MT
-            - _Terran_ : 0,5 à 2 MT
-            - _Superterran : 2 à 10 MT
-            - _Neptunian_ : 10 à 50 MT
-            - _Jovian_ : +50 MT 
-            """
-        )
+        if show:
+            st.title(" ")
+            st.dataframe(pType_tab)
+        else:
+            st.title(" ")
+            st.markdown(
+                """
+                Les type d'exoplanet selon
+                la masse de la terre (MT): 
+                - _Miniterran_ : -0,1 MT
+                - _Subterran_ : 0,1 à 0,5 MT
+                - _Terran_ : 0,5 à 2 MT
+                - _Superterran : 2 à 10 MT
+                - _Neptunian_ : 10 à 50 MT
+                - _Jovian_ : +50 MT 
+                """
+            )
     
     st.markdown(
         """
@@ -402,18 +541,3 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     st.title(" ")
 
     col1, col2 = st.beta_columns(2)
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
