@@ -184,7 +184,7 @@ elif categorie == "Observer les Exoplanètes":
     ___Qu'est ce que la méthode des vitesses radiales___
 
     La force de gravité des planètes modifie le déplacement de leur étoile.
-    Les capteurs situés sur Terre vont détécter des spéctres passant d'une couleur bleu à une couleur rouge. 
+    Les capteurs situés sur Terre vont détécter des spectres passant d'une couleur bleu à une couleur rouge. 
     Le décalage de temps durant le changement de couleurs permet de déduire des paramètres physiques comme la vitesse, la masse et la distance.
     
     ___Et la méthode la méthode du transit ?___
@@ -240,9 +240,10 @@ elif categorie == "Observer les Exoplanètes":
         st.plotly_chart(fig, use_container_width=True) 
     with col2:
          st.markdown("""
-         En 2019, le télescope spatial Kepler est envoyé en orbite avec l'objectif de recenser les planètes similaire à la Terre.
-         
-         La mission de Kepler s'est terminée en 2019 après la découverte record de plus de 2600 planètes. 
+         En 2019, l'engin spatial Kepler est envoyé en orbite avec l'objectif de recenser les planètes similaire à la Terre.
+         Il a été conçu pour utiliser la méthode des transits par l'intermédiaire d télescope de 0.98 mètre de diamètre équipé
+         d'un détecteur mesurant l'intensité lumineuse des étoiles.
+         La mission de Kepler s'est terminée en 2019 après la découverte record de plus de 2600 exoplanètes. 
         """)
 
 
@@ -584,18 +585,17 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=50)
 
     # fitting model on training data
-    model = XGBClassifier().fit(X_train, y_train)
+    model = XGBClassifier().fit(X, y)
 
     # making prediction on unknown dataset
-
-    st.write('prédict')
     df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
-    st.write(df_exoplanet_rf_2[["predictions"]])
 
-    df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]  
-    st.write(df_test)
-
+    df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']] 
     df_final = pd.merge(df_test, df_exoplanet_rf_2,left_index=True,right_index=True)
+    df_final = df_final[['pl_name', 'S_CONSTELLATION', 'disc_year', 'predictions']]
+    df_final.loc[df_final['predictions']==0, 'predictions'] = 'Inhabitable'
+
+    df_final.rename(columns={'pl_name':"Nom de l'Exoplanète", 'S_CONSTELLATION':'Constellation', 'disc_year':'Découverte', 'predictions':'Prédiction'}, inplace=True)
     st.write('résulta')
     st.write(df_final)
 
