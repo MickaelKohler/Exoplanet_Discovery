@@ -1,7 +1,14 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from xgboost import XGBClassifier
+import xgboost as xgb
+
 
 @st.cache
 def load_df(url):
@@ -10,7 +17,7 @@ def load_df(url):
 
 # option
 st.set_page_config(page_title="Exoplanet Discovery",
-                   page_icon="🧊",
+                   page_icon="🚀",
                    layout="wide",
                    initial_sidebar_state="expanded")
 
@@ -114,7 +121,6 @@ if categorie == 'Accueil':
                       yaxis=dict(title="Nombre d'exoplanète découvertes"),
                       uniformtext_minsize=10, uniformtext_mode='hide',
                       margin=dict(l=40, r=70, b=70, t=70),
-                      plot_bgcolor='rgba(0,0,0,0)',
                       legend=dict(
                             x=0,
                             y=0.96,
@@ -149,35 +155,39 @@ if categorie == 'Accueil':
 
 elif categorie == "Observer les Exoplanètes":
     st.title('Comment découvrir des Exoplanètes')
-    st.subheader('Des outils et des hommes')
-    st.title(" ")
+    st.subheader("La découverte d'un nouveau Monde")
 
-    st.markdown("""
-    
-    __La découverte d'un nouveau Monde__
-    
+    st.markdown(
+        """
     Le 6 octobre 1995, les astronomes Michel Mayor et Didier Queloz, ont annoncés la découverte d'une première exoplanète.
     Cette planète, nommée __51 Pegasi B__, se  situe à une cinquantaine d'années lumière de la Terre dans la constelation du Pégase.
-
-    """)
+        """
+    )
 
     fig = px.histogram(planets, 
-    x = "disc_year" ,
-    color = "discoverymethod",
-    title= "Le nombre de planètes découvertes par années et par méthodes",
-    color_discrete_sequence= px.colors.sequential.Plasma_r,
-    nbins = 10)  
+                x = "disc_year" ,
+                color = "discoverymethod",
+                title= "Le nombre de planètes découvertes par années et par méthodes",
+                color_discrete_sequence= px.colors.sequential.Oryel_r,
+                nbins = 10)
+    fig.update_layout(
+        xaxis_title = "Années de découverte",
+        yaxis_title = "Nombre d'Exoplanet"
+    )
     st.plotly_chart(fig, use_container_width=True)
+
+    if show:
+        df_hist = pd.pivot_table(planets, index='disc_year', values='pl_name', columns='discoverymethod', aggfunc='count', margins=True).fillna(0)
+        st.dataframe(df_hist)
     
     st.markdown("""
-
-    __Qu'est ce que la méthode des vitesses radiales__
+    ___Qu'est ce que la méthode des vitesses radiales___
 
     La force de gravité des planètes modifie le déplacement de leur étoile.
     Les capteurs situés sur Terre vont détécter des spéctres passant d'une couleur bleu à une couleur rouge. 
     Le décalage de temps durant le changement de couleurs permet de déduire des paramètres physiques comme la vitesse, la masse et la distance.
     
-    __Et la méthode la méthode du transit ?__
+    ___Et la méthode la méthode du transit ?___
 
     Cette méthode consiste en l'observation d'une répétition constante d'une __variation de luminosité__ d'une étoile.
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
@@ -188,7 +198,7 @@ elif categorie == "Observer les Exoplanètes":
         data_frame = planets,
          x = "sy_disterr1" , y = "pl_orbper",
          title = "Les méthodes utilisées en fonction de la période orbitale et de la distance à la Terre", 
-         color = 'discoverymethod' 
+         color = 'discoverymethod',
      )
     fig.update_layout(
         xaxis_title = "Distance à la Terre (al)",
@@ -268,7 +278,7 @@ elif categorie == "Les Exoplanètes habitables":
         st.title(" ")
         st.markdown(
             """
-            Le tableau interactif ci-contre vous présente la position de l’ensemble des exoplanète habitable.
+            Le tableau interactif ci-contre vous présente la position de l’ensemble des exoplanètes habitables.
             Vous avez :
             - _Sur le cercle intérieur_ : les constellations.
             - _Sur le cercle extérieur_ : les systèmes solaire.
@@ -367,7 +377,6 @@ elif categorie == "Les Exoplanètes habitables":
                       yaxis=dict(title=None),
                       uniformtext_minsize=10, uniformtext_mode='hide',
                       margin=dict(l=10, r=10, b=10),
-                      plot_bgcolor='rgba(0,0,0,0)',
                       legend=dict(
                             x=0,
                             y=1,
@@ -378,8 +387,6 @@ elif categorie == "Les Exoplanètes habitables":
     texts = [sType_tab["Exoplanètes"], sType_tab["Habitables"]]
     for i, t in enumerate(texts):
         fig.data[i].text = t
-
-
 
     if show:
         col1, col2 = st.beta_columns([1, 3])
@@ -434,7 +441,6 @@ elif categorie == "Les Exoplanètes habitables":
                       yaxis=dict(title=None),
                         uniformtext_minsize=10, uniformtext_mode='hide',
                         margin=dict(l=10, r=10, b=10),
-                        plot_bgcolor='rgba(0,0,0,0)',
                         legend=dict(
                             x=0,
                             y=1,
@@ -488,7 +494,6 @@ elif categorie == "Les Exoplanètes habitables":
                       yaxis=dict(title=None),
                         uniformtext_minsize=10, uniformtext_mode='hide',
                         margin=dict(l=10, r=10, b=10),
-                        plot_bgcolor='rgba(0,0,0,0)',
                         legend=dict(
                             x=0,
                             y=1,
@@ -540,4 +545,48 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     st.subheader("Comment le Machine Learning peut venir à l'aide des Astrophysicien")
     st.title(" ")
 
-    col1, col2 = st.beta_columns(2)
+    df_exoplanet_vf = planets.copy()
+
+    # Selecting all numerical column from data fram
+    numeical_columns_list = df_exoplanet_vf.select_dtypes(include=np.number).columns.tolist()
+    df_exoplanet_num= df_exoplanet_vf[numeical_columns_list]
+
+    # Selecting main categorical columns
+    df_exoplanet_cat = df_exoplanet_vf[['pl_letter','discoverymethod','disc_locale']]
+
+    # setting them into numerical value using factorization
+    df_exoplanet_cat['pl_letter'] = df_exoplanet_cat['pl_letter'].factorize()[0]
+    df_exoplanet_cat['discoverymethod'] = df_exoplanet_cat['discoverymethod'].factorize()[0]
+    df_exoplanet_cat['disc_locale'] = df_exoplanet_cat['disc_locale'].factorize()[0]
+
+    # merging dataset of selected columns 
+    df_exoplanet_rf = df_exoplanet_num.join(df_exoplanet_cat)
+
+    # ...and splitting dataset on 'P_HABITABLE' none or not
+    df_exoplanet_rf_1 = df_exoplanet_rf[df_exoplanet_rf['P_HABITABLE'].notna()]
+    df_exoplanet_rf_2 = df_exoplanet_rf[df_exoplanet_rf['P_HABITABLE'].isna()]
+
+    # filling missing values with the mean of each column
+    df_exoplanet_rf_1.fillna(df_exoplanet_rf_1.mean(), inplace=True)
+
+    # filling unknown 'P_HABITABLE' with 0 for ML sake
+    df_exoplanet_rf_2[df_exoplanet_rf_2['P_HABITABLE']!=0] = 0
+
+    # starting ML with XGboost
+    y = df_exoplanet_rf_1["P_HABITABLE"]
+    X = df_exoplanet_rf_1.drop("P_HABITABLE", axis=1)
+
+    #training data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=50)
+
+    # fitting model on training data
+    model = XGBClassifier()
+    model.fit(X_train, y_train)
+
+    # making prediction on unknown dataset
+    df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
+
+    df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]  
+
+    df_final = pd.merge(df_test,df_exoplanet_rf_2,left_index=True,right_index=True)
+    st.write(df_final)
