@@ -111,10 +111,9 @@ if categorie == 'Accueil':
         decad_disc['Augmentation'] = ''
         for i in range(1,5):
             decad_disc.iloc[i, 1] = (((decad_disc.iloc[i, 0] - decad_disc.iloc[i-1, 0]) / decad_disc.iloc[i-1, 0]) * 100).round()
-        decad_disc.rename(index={1980:'avant 1990', 1990:'1990-2000', 2000:'2000-10', 2010:'2010-20', 2020:'aptès 2020'}, inplace=True)
 
         fig = px.bar(decad_disc, x=decad_disc.index, y="Découvertes", 
-                     title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation',color_discrete_sequence =['mediumseagreen']*len(decad_disc))
+                     title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation',color_discrete_sequence =['darkblue']*len(decad_disc))
         fig.update_traces(texttemplate='%{text:.2s}%')
         fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
                       xaxis=dict(title="Pourcentage d'évolution d'une décénnie sur l'autre"),
