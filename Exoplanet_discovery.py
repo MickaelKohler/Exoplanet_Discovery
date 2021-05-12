@@ -584,9 +584,25 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     model.fit(X_train, y_train)
 
     # making prediction on unknown dataset
+    df_exoplanet_rf_2["predictions"] =''
+    st.dataframe(df_exoplanet_rf_2)
+
     df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
 
     df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]  
 
     df_final = pd.merge(df_test,df_exoplanet_rf_2,left_index=True,right_index=True)
     st.write(df_final)
+
+# New dataframe with score of different test
+
+dataScore = {'Test' : ['SGDClassifier', "DecisionTreeClassifier", "KNeighborsClassifier", "BaggingClassifier","RandomForestClassifier",
+ "AdaBoostClassifier", "XGBoost"],
+ "Score" : [0.990069513406156, 0.984111221449851, 0.991062562065541, 0.990069513406156, 0.991062562065541, 0.985104270109235, 0.9890764647467726]}
+pd.DataFrame.from_dict(dataScore)
+
+fig = px.histogram(data_frame = data, x="Test", y="Score", title="Score des différents test").update_xaxes(categoryorder="total descending")
+fig.update_yaxes(range=[0.97, 1])
+fig.update_layout(xaxis_title = "Score", yaxis_title = "Test")
+
+fig.show()
