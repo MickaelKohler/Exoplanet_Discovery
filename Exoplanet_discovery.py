@@ -564,7 +564,7 @@ elif categorie == "Les Exoplanètes habitables":
                 - _Miniterran_ : -0,1 MT
                 - _Subterran_ : 0,1 à 0,5 MT
                 - _Terran_ : 0,5 à 2 MT
-                - _Superterran : 2 à 10 MT
+                - _Superterran_ : 2 à 10 MT
                 - _Neptunian_ : 10 à 50 MT
                 - _Jovian_ : +50 MT 
                 """
