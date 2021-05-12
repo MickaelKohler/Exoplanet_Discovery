@@ -550,6 +550,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     # Selecting all numerical column from data fram
     numeical_columns_list = df_exoplanet_vf.select_dtypes(include=np.number).columns.tolist()
     df_exoplanet_num= df_exoplanet_vf[numeical_columns_list]
+    st.dataframe(df_exoplanet_num)
 
     # Selecting main categorical columns
     df_exoplanet_cat = df_exoplanet_vf[['pl_letter','discoverymethod','disc_locale']]
@@ -558,9 +559,11 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     df_exoplanet_cat['pl_letter'] = df_exoplanet_cat['pl_letter'].factorize()[0]
     df_exoplanet_cat['discoverymethod'] = df_exoplanet_cat['discoverymethod'].factorize()[0]
     df_exoplanet_cat['disc_locale'] = df_exoplanet_cat['disc_locale'].factorize()[0]
+    st.dataframe(df_exoplanet_cat)
 
     # merging dataset of selected columns 
     df_exoplanet_rf = df_exoplanet_num.join(df_exoplanet_cat)
+    st.dataframe(df_exoplanet_rf)
 
     # ...and splitting dataset on 'P_HABITABLE' none or not
     df_exoplanet_rf_1 = df_exoplanet_rf[df_exoplanet_rf['P_HABITABLE'].notna()]
@@ -571,6 +574,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
 
     # filling unknown 'P_HABITABLE' with 0 for ML sake
     df_exoplanet_rf_2[df_exoplanet_rf_2['P_HABITABLE']!=0] = 0
+    st.dataframe(df_exoplanet_rf_2)
 
     # starting ML with XGboost
     y = df_exoplanet_rf_1["P_HABITABLE"]
@@ -594,15 +598,21 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     df_final = pd.merge(df_test,df_exoplanet_rf_2,left_index=True,right_index=True)
     st.write(df_final)
 
-# New dataframe with score of different test
+    # New dataframe with score of different test
 
-dataScore = {'Test' : ['SGDClassifier', "DecisionTreeClassifier", "KNeighborsClassifier", "BaggingClassifier","RandomForestClassifier",
- "AdaBoostClassifier", "XGBoost"],
- "Score" : [0.990069513406156, 0.984111221449851, 0.991062562065541, 0.990069513406156, 0.991062562065541, 0.985104270109235, 0.9890764647467726]}
-pd.DataFrame.from_dict(dataScore)
+    dataScore = {'Test' : ['SGDClassifier', "DecisionTreeClassifier", "KNeighborsClassifier", "BaggingClassifier","RandomForestClassifier",
+    "AdaBoostClassifier", "XGBoost"],
+    "Score" : [0.990069513406156, 0.984111221449851, 0.991062562065541, 0.990069513406156, 0.991062562065541, 0.985104270109235, 0.9890764647467726]}
+    pd.DataFrame.from_dict(dataScore)
 
-fig = px.histogram(data_frame = data, x="Test", y="Score", title="Score des différents test").update_xaxes(categoryorder="total descending")
-fig.update_yaxes(range=[0.97, 1])
-fig.update_layout(xaxis_title = "Score", yaxis_title = "Test")
+    fig = px.histogram(
+        data_frame = dataScore,
+        x="Test",
+        y="Score",
+        title="Score des différents test"
+    ).update_xaxes(categoryorder="total descending")
 
-fig.show()
+    fig.update_yaxes(range=[0.97, 1])
+    fig.update_layout(xaxis_title = "Score", yaxis_title = "Test")
+
+st.plotly_chart(fig, use_container_width=True) 
