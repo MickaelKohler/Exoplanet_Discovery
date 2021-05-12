@@ -208,7 +208,7 @@ elif categorie == "Observer les Exoplanètes":
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
     """)
 
-    col1, col2, col3 = st.beta_columns([2, 3, 2])
+    col1, col2, col3 = st.beta_columns([1, 3, 1])
     with col2:
         st.markdown("![Alt Text](https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif)")
 
