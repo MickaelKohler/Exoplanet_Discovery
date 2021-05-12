@@ -530,7 +530,7 @@ elif categorie == "Les Exoplanètes habitables":
 
     fig = px.bar(pType_tab, x=pType_tab.index, y=["Exoplanètes", "Habitables"],
                 title="<b>La répartition des exoplanètes selon leur type</b> (en pourcents)", barmode='group',
-                color_discrete_map={'Exoplanètes': 'deepskyblue', 'Habitables': 'coral'}))
+                color_discrete_map={'Exoplanètes': 'deepskyblue', 'Habitables': 'coral'})
     fig.update_traces(texttemplate='%{text}%', textposition='outside')
     fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
                       xaxis=dict(title="Type d'exoplanète"),
