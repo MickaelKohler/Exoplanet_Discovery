@@ -590,16 +590,22 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
 
     df_test = df_exoplanet_vf[['pl_name','discoverymethod']]
-    st.dataframe(df_test)
     df_final = pd.merge(df_test, df_exoplanet_rf_2,left_index=True,right_index=True)
-    st.dataframe(df_final)
     df_final = df_final[['pl_name', 'disc_year', 'discoverymethod_x', 'predictions']]
-    st.dataframe(df_final)
     df_final.loc[df_final['predictions']==0, 'predictions'] = 'Inhabitable'
 
     df_final.rename(columns={'pl_name':"Nom de l'Exoplanète", 'discoverymethod_x':'Méthode utilisée', 'disc_year':'Découverte', 'predictions':'Prédiction'}, inplace=True)
-    st.write('résulta')
-    st.dataframe(df_final, height=550)
+    
+    col1, col2 = st.beta_columns([3, 1])
+    with col1:
+        st.dataframe(df_final, height=550)
+
+    with col2:
+        st.markdown(
+            """
+            blabla
+            """
+        )
 
     expander = st.beta_expander("Explication du modèle")
     expander.markdown(
