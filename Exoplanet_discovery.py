@@ -182,7 +182,7 @@ elif categorie == "Observer les Exoplanètes":
                 x = "disc_year" ,
                 color = "discoverymethod",
                 title= "<b>Le nombre de planètes découvertes par années et par méthodes</b>",
-                color_discrete_sequence= px.colors.sequential.Oryel_r,
+                color_discrete_sequence= px.colors.sequential.Agsunset,
                 nbins = 10,
                 labels="Méthode de découverte")
     fig.update_layout(
@@ -383,6 +383,9 @@ elif categorie == "Les Exoplanètes habitables":
         margin = dict(l=10, r=10, b=10, t=70))
     st.plotly_chart(fig, use_container_width=True)
 
+    expander = st.sidebar.beta_expander("Illustration de la zone habitable dans notre système solaire")
+    expander.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/zone_habitable_systeme_solaire_espace_stellaire_1024x1024.jpg')
+
     st.markdown("---")
     
     # Comparatif Habitable/inhabitable
@@ -407,7 +410,7 @@ elif categorie == "Les Exoplanètes habitables":
     sType_tab = sType_tab.fillna(0).rename(columns={'S_TYPE_TEMP':'Habitables'}).round(2)
 
     fig = px.bar(sType_tab, x=sType_tab.index, y=["Exoplanètes", "Habitables"],
-                title="<b>La répartition des exoplanètes selon le type de leur Soleil</b> (en pourcents)", barmode='group')
+                title="<b>La répartition des exoplanètes selon le type de leur étoile</b> (en pourcents)", barmode='group')
     fig.update_traces(texttemplate='%{text}%', textposition='outside')
     fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
                       xaxis=dict(title="Catégorie d'étoile"),
