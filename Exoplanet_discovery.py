@@ -191,7 +191,6 @@ elif categorie == "Observer les Exoplanètes":
 
     Cette méthode consiste en l'observation d'une répétition constante d'une __variation de luminosité__ d'une étoile.
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
-
     """)
 
     fig = px.scatter(
@@ -214,7 +213,7 @@ elif categorie == "Observer les Exoplanètes":
 
     st.markdown("""
 
-    La méthode de la vitesse radiale
+    Ces méthodes nécessitent des équipements adaptées
 
     """)
 
@@ -552,6 +551,20 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     st.subheader("Comment le Machine Learning peut venir à l'aide des Astrophysicien")
     st.title(" ")
 
+    st.markdown(
+        """
+        Lors de notre recherche de la base de donnée parfaite (BDP), nous avons trouvé une base de 
+        donnée hébergée par _Planetary Hability Laboratory_ qui tente de répertorier et identifier les exoplanètes habitables.
+
+        Toutefois, leur base de donnée ne prend pas en considération les dernières 
+        exoplanètes découvertes à partir de début 2020. 
+
+        Nous avons donc tenté d’entrainer un __algorithme de Machine Learning__ pour déterminer, 
+        selon les caractéristiques de chaque exoplanètes si elle peut être catégorisée comme habitable ou non, 
+        dans le but de catégoriser celles qui n’ont pas été identifiée.
+        """
+    )
+
     df_exoplanet_vf = planets.copy()
 
     # Selecting all numerical column from data fram
@@ -601,15 +614,26 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     with col1:
         st.markdown(
             """
-            blabla
+            Cliquez sur le bouton ci-dessous pour rechercher de nouvelles planètes 
+            ayant le potentielle d'être habitable. 
             """
         )
         if st.button('Rechercher la vie'):
             ML_off = False
+            st.markdown(
+                """
+                Comme vous pouvez le voir, __aucune nouvelle exoplanète habitable ne 
+                remplie les conditions__ pour pouvoir accueillir la vie. 
+
+                La recherche continue…
+
+                _« I want to believe »_
+                """
+            )
     with col2:
         if ML_off:
             display_tab = df_final.copy()
-            display_tab['predictions'] = ' '
+            display_tab['Prédictions'] = ' '
             st.dataframe(display_tab, height=550)
         else:
             st.dataframe(df_final, height=550)
@@ -617,7 +641,13 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     expander = st.beta_expander("Explication du modèle")
     expander.markdown(
         """
-        blabla pourquoi ce modèle choisi
+        Nous avons testé les algorithmes de classification les plus pertinents afin de prédire si une planète est habitable.
+
+        Lors de ces tests, les algorithmes, ci-dessous, ont produit les résultats les plus proches de la réalités (scores), 
+        c'est à dire en comparant nos résultats aux informations à notre disposition.
+
+        Bien que les meilleurs scores soient supérieurs à celui du XGBoost, que nous avons choisit, 
+        ce dernier a été plus à même de prédire les planètes habitables connues.
         """)
         
     # New dataframe with score of different test
@@ -637,3 +667,14 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     fig.update_layout(xaxis_title = "Score", yaxis_title = "Test")
 
     expander.plotly_chart(fig, use_container_width=True) 
+
+    st.markdown(
+        """
+        XGBoot est la Extrême Gradient Boosted Trees, plus simplement il s'agit d'une forêt d'arbres de décision optimisée.
+
+        "Un arbre de décision est un outil d'aide à la décision représentant un ensemble de choix sous la forme graphique d'un arbre. 
+        Les différentes décisions possibles sont situées aux extrémités des branches (les « feuilles » de l'arbre), et sont 
+        atteintes en fonction de décisions prises à chaque étape" 
+        [source](https://fr.wikipedia.org/wiki/Arbre_de_d%C3%A9cision)
+        """
+    )
