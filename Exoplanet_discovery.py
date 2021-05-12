@@ -206,15 +206,8 @@ elif categorie == "Observer les Exoplanètes":
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
     """)
 
-    file = open("https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif", "rb")
-    contents = file.read()
-    dataurl = base64.b64encode(contents).decode("utf-8")
-    file.close()
+    st.markdown("![Alt Text](https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif)")
 
-    st.markdown(
-    f'<img src="data:image/gif;base64,{data_url}" alt="cat gif">',
-    unsafe_allow_html=True,
-    )
     
 
     fig = px.scatter(
