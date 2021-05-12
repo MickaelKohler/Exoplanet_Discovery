@@ -607,7 +607,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
         if st.button('Rechercher la vie'):
             ML_off = False
     with col2:
-        if ML_on:
+        if ML_off:
             display_tab = df_final.copy()
             display_tab['predictions'] = ' '
             st.dataframe(display_tab, height=550)
