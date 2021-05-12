@@ -591,10 +591,10 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     # making prediction on unknown dataset
     df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
 
-    st.write('test 3')
     df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]
     df_final = pd.merge(df_test, df_exoplanet_rf_2,left_index=True,right_index=True)
-    df_final = df_final[['pl_name', 'discoverymehod', 'disc_year', 'predictions']]
+    st.write('df_final')
+    df_final = df_final[['pl_name', 'disc_year', 'predictions']]
     df_final.loc[df_final['predictions']==0, 'predictions'] = 'Inhabitable'
 
     df_final.rename(columns={'pl_name':"Nom de l'Exoplanète", 'discoverymehod':'Méthode utilisée', 'disc_year':'Découverte', 'predictions':'Prédiction'}, inplace=True)
