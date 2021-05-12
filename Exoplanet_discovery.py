@@ -371,7 +371,7 @@ elif categorie == "Les Exoplanètes habitables":
             x=hab['P_DISTANCE'],
             y=hab['S_TEMPERATURE'],
             marker=dict(
-                color='darkgreen'
+                color='forestgreen'
             ),
             name='Habitable'
         )
