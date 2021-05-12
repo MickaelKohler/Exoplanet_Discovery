@@ -150,10 +150,10 @@ if categorie == 'Accueil':
         st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/tool_pandas.png')
     with col2:
         st.write('Création du modèle de ML')
-        st.image('https://github.com/MickaelKohler/Exoplanet_Discovery/blob/main/Ressources/1200px-Scikit_learn_logo_small.svg.png')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1200px-Scikit_learn_logo_small.svg.png')
     with col3:
         st.write('Création des graphiques')
-        st.image('https://github.com/MickaelKohler/Exoplanet_Discovery/blob/main/Ressources/1200px-Plotly-logo-01-square.png')
+        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1200px-Plotly-logo-01-square.png')
     with col4:
         st.write('Création de la WebApp')
         st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1*u9U3YjxT9c9A1FIaDMonHw.png')
