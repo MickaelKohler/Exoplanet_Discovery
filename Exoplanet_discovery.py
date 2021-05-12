@@ -144,7 +144,7 @@ if categorie == 'Accueil':
                  caption="Ceci n'est pas une exoplanète")
 
     expander = st.beta_expander("Les technologies utilisées")
-    expander.write('Plusieurs librairies de _Python_ ont été utilisées pour la réalisation de ce site : ')
+    # expander.write('Plusieurs librairies de _Python_ ont été utilisées pour la réalisation de ce site : ')
     col1, col2, col3, col4 = expander.beta_columns(4)
     with col1:
         st.write('Gestion des base de données')
@@ -208,7 +208,7 @@ elif categorie == "Observer les Exoplanètes":
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
     """)
 
-    col1, col2, col3 = st.beta_columns([1, 3, 1])
+    col1, col2, col3 = st.beta_columns([2, 3, 1])
     with col2:
         st.markdown("![Alt Text](https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif)")
 
