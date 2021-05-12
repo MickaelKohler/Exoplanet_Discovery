@@ -159,7 +159,7 @@ elif categorie == "Observer les Exoplanètes":
 
     st.markdown(
         """
-    Le 6 octobre 1995, les astronomes Michel Mayor et Didier Queloz, ont annoncés la découverte d'une première exoplanète.
+    Le 6 octobre 1995, les astronomes Michel Mayor et Didier Queloz, annoncent la découverte d'une première exoplanète.
     Cette planète, nommée __51 Pegasi B__, se  situe à une cinquantaine d'années lumière de la Terre dans la constelation du Pégase.
         """
     )
@@ -555,7 +555,6 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     # Selecting all numerical column from data fram
     numeical_columns_list = df_exoplanet_vf.select_dtypes(include=np.number).columns.tolist()
     df_exoplanet_num= df_exoplanet_vf[numeical_columns_list]
-    st.dataframe(df_exoplanet_num)
 
     # Selecting main categorical columns
     df_exoplanet_cat = df_exoplanet_vf[['pl_letter','discoverymethod','disc_locale']]
@@ -564,11 +563,9 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     df_exoplanet_cat['pl_letter'] = df_exoplanet_cat['pl_letter'].factorize()[0]
     df_exoplanet_cat['discoverymethod'] = df_exoplanet_cat['discoverymethod'].factorize()[0]
     df_exoplanet_cat['disc_locale'] = df_exoplanet_cat['disc_locale'].factorize()[0]
-    st.dataframe(df_exoplanet_cat)
 
     # merging dataset of selected columns 
     df_exoplanet_rf = df_exoplanet_num.join(df_exoplanet_cat)
-    st.dataframe(df_exoplanet_rf)
 
     # ...and splitting dataset on 'P_HABITABLE' none or not
     df_exoplanet_rf_1 = df_exoplanet_rf[df_exoplanet_rf['P_HABITABLE'].notna()]
@@ -591,17 +588,15 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
 
     df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]
-    st.dataframe(df_exoplanet_vf)
-    st.dataframe(df_test)
     df_final = pd.merge(df_test, df_exoplanet_rf_2,left_index=True,right_index=True)
-    df_final = df_final[['pl_name', 'S_CONSTELLATION', 'disc_year', 'predictions']]
+    df_final = df_final[['pl_name', 'discoverymehod', 'disc_year', 'predictions']]
     df_final.loc[df_final['predictions']==0, 'predictions'] = 'Inhabitable'
 
-    df_final.rename(columns={'pl_name':"Nom de l'Exoplanète", 'S_CONSTELLATION':'Constellation', 'disc_year':'Découverte', 'predictions':'Prédiction'}, inplace=True)
+    df_final.rename(columns={'pl_name':"Nom de l'Exoplanète", 'discoverymehod':'Méthode utilisée', 'disc_year':'Découverte', 'predictions':'Prédiction'}, inplace=True)
     st.write('résulta')
-    st.write(df_final)
+    st.table(df_final)
 
-    expander = st.sidebar.beta_expander("Explication du modèle")
+    expander = st.beta_expander("Explication du modèle")
     expander.markdown(
         """
         blabla pourquoi ce modèle choisi
