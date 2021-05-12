@@ -111,13 +111,14 @@ if categorie == 'Accueil':
         decad_disc['Augmentation'] = ''
         for i in range(1,5):
             decad_disc.iloc[i, 1] = (((decad_disc.iloc[i, 0] - decad_disc.iloc[i-1, 0]) / decad_disc.iloc[i-1, 0]) * 100).round()
+        decad_disc.rename(index={1980:'avant 1990', 1990:'1990-2000', 2000:'2000-10', 2010:'2010-20', 2020:'aptès 2020'}, inplace=True)
 
         fig = px.bar(decad_disc, x=decad_disc.index, y="Découvertes", 
-                     title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation')
+                     title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation',color_discrete_sequence =['mediumseagreen']*len(decad_disc))
         fig.update_traces(texttemplate='%{text:.2s}%')
         fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
-                      xaxis=dict(title=None),
-                      yaxis=dict(title="Nombre d'exoplanète découvertes"),
+                      xaxis=dict(title="Pourcentage d'évolution d'une décénnie sur l'autre"),
+                      yaxis=dict(title="Nombre d'exoplanètes découvertes"),
                       uniformtext_minsize=10, uniformtext_mode='hide',
                       margin=dict(l=40, r=70, b=70, t=70),
                       legend=dict(
@@ -147,16 +148,16 @@ if categorie == 'Accueil':
     expander.write('Plusieurs librairies de _Python_ ont été utilisées pour la réalisation de ce site : ')
     col1, col2, col3, col4 = expander.beta_columns(4)
     with col1:
-        st.write('Gestion des base de données')
+        st.write('__Gestion des base de données__')
         st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/tool_pandas.png')
     with col2:
-        st.write('Création du modèle de ML')
+        st.write('__Création du modèle de ML__')
         st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1200px-Scikit_learn_logo_small.svg.png')
     with col3:
-        st.write('Création des graphiques')
+        st.write('__Création des graphiques__')
         st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/logo_plotly.png')
     with col4:
-        st.write('Création de la WebApp')
+        st.write('__Création de la WebApp__')
         st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1*u9U3YjxT9c9A1FIaDMonHw.png')
 
     col1, col2 = expander.beta_columns([7, 1])
