@@ -183,8 +183,8 @@ elif categorie == "Observer les Exoplanètes":
                 color = "discoverymethod",
                 title= "<b>Le nombre de planètes découvertes par années et par méthodes</b>",
                 color_discrete_sequence= px.colors.sequential.Oryel_r,
-                nbins = 10
-                labels=)
+                nbins = 10,
+                labels="Méthode de découverte")
     fig.update_layout(
         xaxis_title = "Années de découverte",
         yaxis_title = "Nombre d'Exoplanet"
