@@ -590,7 +590,9 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     # making prediction on unknown dataset
     df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
 
-    df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']] 
+    df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]
+    st.dataframe(df_exoplanet_vf)
+    st.dataframe(df_test)
     df_final = pd.merge(df_test, df_exoplanet_rf_2,left_index=True,right_index=True)
     df_final = df_final[['pl_name', 'S_CONSTELLATION', 'disc_year', 'predictions']]
     df_final.loc[df_final['predictions']==0, 'predictions'] = 'Inhabitable'
@@ -599,8 +601,13 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     st.write('résulta')
     st.write(df_final)
 
+    expander = st.sidebar.beta_expander("Explication du modèle")
+    expander.markdown(
+        """
+        blabla pourquoi ce modèle choisi
+        """)
+        
     # New dataframe with score of different test
-
     dataScore = {'Test' : ['SGDClassifier', "DecisionTreeClassifier", "KNeighborsClassifier", "BaggingClassifier","RandomForestClassifier",
     "AdaBoostClassifier", "XGBoost"],
     "Score" : [0.990069513406156, 0.984111221449851, 0.991062562065541, 0.990069513406156, 0.991062562065541, 0.985104270109235, 0.9890764647467726]}
@@ -616,4 +623,4 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     fig.update_yaxes(range=[0.97, 1])
     fig.update_layout(xaxis_title = "Score", yaxis_title = "Test")
 
-    st.plotly_chart(fig, use_container_width=True) 
+    expander.plotly_chart(fig, use_container_width=True) 
