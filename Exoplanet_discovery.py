@@ -208,7 +208,7 @@ elif categorie == "Observer les Exoplanètes":
     Lorsqu'une planète passe devant une étoiles, elle crée une zone d'ombre qui font varier la luminosité captée depuis la Terre.
     """)
 
-    col1, col2, col3 = st.beta_columns([2, 3, 1])
+    col1, col2, col3 = st.beta_columns([2, 3, 2])
     with col2:
         st.markdown("![Alt Text](https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif)")
 
@@ -259,11 +259,13 @@ elif categorie == "Observer les Exoplanètes":
 
     fig.update_layout(
         xaxis_title = "Type de telescope",
-        yaxis_title = "Nombre de planètes détéctées")
+        yaxis_title = "Nombre de planètes détéctées",
+        title_text='Max température par Date en fonction des opinions',
+        title_x=0.5)
 
     col1, col2 = st.beta_columns([2, 1])
     with col1:
-        st.plotly_chart(fig, use_container_width=True) 
+        st.plotly_chart(fig, use_container_width=True)
     with col2:
          st.title('')
          st.markdown("""
@@ -652,7 +654,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
             ML_off = False
             st.markdown(
                 """
-                Comme vous pouvez le voir, __aucune nouvelle exoplanète habitable ne 
+                Comme vous pouvez le voir, __aucune nouvelle exoplanète ne 
                 remplie les conditions__ pour pouvoir accueillir la vie. 
 
                 La recherche continue…
