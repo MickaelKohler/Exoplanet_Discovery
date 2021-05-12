@@ -591,7 +591,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
 
     df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]
     df_final = pd.merge(df_test, df_exoplanet_rf_2,left_index=True,right_index=True)
-    st.write(df_final)
+    st.write(df_exoplanet_vf)
     df_final = df_final[['pl_name', 'disc_year', 'predictions']]
     df_final.loc[df_final['predictions']==0, 'predictions'] = 'Inhabitable'
 
