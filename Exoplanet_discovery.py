@@ -112,7 +112,8 @@ if categorie == 'Accueil':
         for i in range(1,5):
             decad_disc.iloc[i, 1] = (((decad_disc.iloc[i, 0] - decad_disc.iloc[i-1, 0]) / decad_disc.iloc[i-1, 0]) * 100).round()
 
-        fig = px.bar(decad_disc, x=decad_disc.index, y=["Découvertes", "Prévisionnel"], title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation')
+        fig = px.bar(decad_disc, x=decad_disc.index, y="Découvertes", 
+                     title="Evolution du nombre d'exoplanètes découvertes", text='Augmentation')
         fig.update_traces(texttemplate='%{text:.2s}%')
         fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
                       xaxis=dict(title=None),
