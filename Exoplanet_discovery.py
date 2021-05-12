@@ -270,7 +270,7 @@ elif categorie == "Observer les Exoplanètes":
          st.title('')
          st.markdown("""
 
-         En 2019, l'engin spatial Kepler est envoyé en orbite avec l'objectif de recenser les planètes similaire à la Terre.
+         En 2009, l'engin spatial Kepler est envoyé en orbite avec l'objectif de recenser les planètes similaire à la Terre.
          
          Il a été conçu pour utiliser la méthode des transits par l'intermédiaire d télescope de 0.98 mètre de diamètre équipé
          d'un détecteur mesurant l'intensité lumineuse des étoiles.
@@ -661,7 +661,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
             st.markdown(
                 """
                 Comme vous pouvez le voir, __aucune nouvelle exoplanète ne 
-                remplie les conditions__ pour pouvoir accueillir la vie. 
+                remplit les conditions__ pour pouvoir accueillir la vie. 
 
                 La recherche continue…
 
@@ -710,7 +710,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
 
     expander.markdown(
         """
-        ___Qu'est-ce que le XGBoot ?___
+        ___Qu'est-ce que le XGBoost ?___
 
         XGBoot est la Extrême Gradient Boosted Trees, plus simplement il s'agit d'une forêt d'arbres de décision optimisée.
 
