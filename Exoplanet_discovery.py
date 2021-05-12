@@ -182,7 +182,7 @@ elif categorie == "Observer les Exoplanètes":
                 x = "disc_year" ,
                 color = "discoverymethod",
                 title= "<b>Le nombre de planètes découvertes par années et par méthodes</b>",
-                color_discrete_sequence= px.colors.sequential.Agsunset,
+                color_discrete_sequence='Dark24',
                 nbins = 10,
                 labels="Méthode de découverte")
     fig.update_layout(
@@ -410,7 +410,8 @@ elif categorie == "Les Exoplanètes habitables":
     sType_tab = sType_tab.fillna(0).rename(columns={'S_TYPE_TEMP':'Habitables'}).round(2)
 
     fig = px.bar(sType_tab, x=sType_tab.index, y=["Exoplanètes", "Habitables"],
-                title="<b>La répartition des exoplanètes selon le type de leur étoile</b> (en pourcents)", barmode='group')
+                title="<b>La répartition des exoplanètes selon le type de leur étoile</b> (en pourcents)", barmode='group',
+                color_discrete_map={'Exoplanètes': 'deepskyblue', 'Habitables': 'coral'})
     fig.update_traces(texttemplate='%{text}%', textposition='outside')
     fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
                       xaxis=dict(title="Catégorie d'étoile"),
@@ -474,7 +475,8 @@ elif categorie == "Les Exoplanètes habitables":
     sAge_tab.rename(index={0:'<2', 2:'2-4', 4:'4-6', 6:'6-8', 8:'8-10', 10:'+10'}, inplace=True)
 
     fig = px.bar(sAge_tab, x=sAge_tab.index, y=["Exoplanètes", "Habitables"],
-                title="<b>La répartition des exoplanètes selon l'age de leur étoile</b> (en pourcents)", barmode='group')
+                title="<b>La répartition des exoplanètes selon l'age de leur étoile</b> (en pourcents)", barmode='group',
+                color_discrete_map={'Exoplanètes': 'deepskyblue', 'Habitables': 'coral'})
     fig.update_traces(texttemplate='%{text}%', textposition='outside')
     fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
                       xaxis=dict(title="Age de l'étoile (Gy)"),
@@ -527,7 +529,8 @@ elif categorie == "Les Exoplanètes habitables":
     pType_tab = pType_tab.fillna(0).round(2).rename(columns={'P_TYPE':'Habitables'})
 
     fig = px.bar(pType_tab, x=pType_tab.index, y=["Exoplanètes", "Habitables"],
-                title="<b>La répartition des exoplanètes selon leur type</b> (en pourcents)", barmode='group')
+                title="<b>La répartition des exoplanètes selon leur type</b> (en pourcents)", barmode='group',
+                color_discrete_map={'Exoplanètes': 'deepskyblue', 'Habitables': 'coral'}))
     fig.update_traces(texttemplate='%{text}%', textposition='outside')
     fig.update_layout(showlegend=True, font_family='IBM Plex Sans',
                       xaxis=dict(title="Type d'exoplanète"),
