@@ -239,7 +239,9 @@ elif categorie == "Observer les Exoplanètes":
     with col1:
         st.plotly_chart(fig, use_container_width=True) 
     with col2:
-        st.empty()
+         st.markdown("""
+         En 2019, le télescope spatial Kepler est envoyé en orbite avec l'objectif de recenser l
+        """)
 
 
 elif categorie == "Les Exoplanètes habitables":
@@ -572,10 +574,6 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     # filling missing values with the mean of each column
     df_exoplanet_rf_1.fillna(df_exoplanet_rf_1.mean(), inplace=True)
 
-    # filling unknown 'P_HABITABLE' with 0 for ML sake
-    df_exoplanet_rf_2[df_exoplanet_rf_2['P_HABITABLE']!=0][['P_HABITABLE']] = 0
-    st.dataframe(df_exoplanet_rf_2)
-
     # starting ML with XGboost
     y = df_exoplanet_rf_1["P_HABITABLE"]
     X = df_exoplanet_rf_1.drop("P_HABITABLE", axis=1)
@@ -584,8 +582,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=50)
 
     # fitting model on training data
-    model = XGBClassifier()
-    model.fit(X_train, y_train)
+    model = XGBClassifier().fit(X_train, y_train)
 
     # making prediction on unknown dataset
     df_exoplanet_rf_2["predictions"] =''
@@ -596,6 +593,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]  
 
     df_final = pd.merge(df_test,df_exoplanet_rf_2,left_index=True,right_index=True)
+    st.write('résulta')
     st.write(df_final)
 
     # New dataframe with score of different test
