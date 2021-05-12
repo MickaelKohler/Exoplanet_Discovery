@@ -240,7 +240,9 @@ elif categorie == "Observer les Exoplanètes":
         st.plotly_chart(fig, use_container_width=True) 
     with col2:
          st.markdown("""
-         En 2019, le télescope spatial Kepler est envoyé en orbite avec l'objectif de recenser l
+         En 2019, le télescope spatial Kepler est envoyé en orbite avec l'objectif de recenser les planètes similaire à la Terre.
+         
+         La mission de Kepler s'est terminée en 2019 après la découverte record de plus de 2600 planètes. 
         """)
 
 
@@ -585,14 +587,15 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     model = XGBClassifier().fit(X_train, y_train)
 
     # making prediction on unknown dataset
-    df_exoplanet_rf_2["predictions"] =''
-    st.dataframe(df_exoplanet_rf_2)
 
+    st.write('prédict')
     df_exoplanet_rf_2["predictions"] = model.predict(df_exoplanet_rf_2.drop(columns='P_HABITABLE'))
+    st.write(df_exoplanet_rf_2[["predictions"]])
 
     df_test = df_exoplanet_vf[['pl_name','S_CONSTELLATION']]  
+    st.write(df_test)
 
-    df_final = pd.merge(df_test,df_exoplanet_rf_2,left_index=True,right_index=True)
+    df_final = pd.merge(df_test, df_exoplanet_rf_2,left_index=True,right_index=True)
     st.write('résulta')
     st.write(df_final)
 
