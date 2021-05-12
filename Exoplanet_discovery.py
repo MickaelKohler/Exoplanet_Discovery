@@ -573,7 +573,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     df_exoplanet_rf_1.fillna(df_exoplanet_rf_1.mean(), inplace=True)
 
     # filling unknown 'P_HABITABLE' with 0 for ML sake
-    df_exoplanet_rf_2[df_exoplanet_rf_2['P_HABITABLE']!=0] = 0
+    df_exoplanet_rf_2[df_exoplanet_rf_2['P_HABITABLE']!=0][['P_HABITABLE']] = 0
     st.dataframe(df_exoplanet_rf_2)
 
     # starting ML with XGboost
@@ -615,4 +615,4 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     fig.update_yaxes(range=[0.97, 1])
     fig.update_layout(xaxis_title = "Score", yaxis_title = "Test")
 
-st.plotly_chart(fig, use_container_width=True) 
+    st.plotly_chart(fig, use_container_width=True) 
