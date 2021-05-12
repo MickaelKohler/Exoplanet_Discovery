@@ -596,16 +596,23 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
 
     df_final.rename(columns={'pl_name':"Nom de l'Exoplanète", 'discoverymethod_x':'Méthode utilisée', 'disc_year':'Découverte', 'predictions':'Prédiction'}, inplace=True)
     
-    col1, col2 = st.beta_columns([3, 1])
+    ML_off = True
+    col1, col2 = st.beta_columns([1, 3])
     with col1:
-        st.dataframe(df_final, height=550)
-
-    with col2:
         st.markdown(
             """
             blabla
             """
         )
+        if st.button('Rechercher la vie'):
+            ML_off = False
+    with col2:
+        if ML_on:
+            display_tab = df_final.copy()
+            display_tab['predictions'] = ' '
+            st.dataframe(display_tab, height=550)
+        else:
+            st.dataframe(df_final, height=550)
 
     expander = st.beta_expander("Explication du modèle")
     expander.markdown(
