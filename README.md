@@ -14,7 +14,7 @@ Creation d’un WebApp d’information sur les caractéristiques et l’identifi
 
 Exoplanet_Discovery dans le cadre d’un **Hackathon** de 30 heures, organisé par la __Wild Code School__
 
-L’objectif de fournir un support de présentation autour d’un thème portant sur l’espace. L’équipe a décide de se concentrer sur les caractéristiques des exoplanètes habitables afin d’entrainer un algorithme de *Machine Learning* pour déterminer si une nouvelle exoplanète est habitable.
+L’objectif de fournir un support de présentation autour d’un thème portant sur l’espace. L’équipe a décide de se concentrer sur les *caractéristiques des exoplanètes* habitables afin d’entrainer un algorithme de *Machine Learning* pour déterminer si une nouvelle exoplanète est habitable.
 
 La **WebApp** crée se divise en 3 sections : 
 - Une présentation des techniques d’identification  des exopnalètes
