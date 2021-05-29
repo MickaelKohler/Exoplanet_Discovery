@@ -42,9 +42,10 @@ Projet fait entièrement en **Python**
 
 Utilisations des librairies suivantes : 
  - Pandas
- - Sklearn
+ - Scikit-learn
  - Plotly
  - Streamlit
+ - XGboost
 
 ## Bases de données 
 
