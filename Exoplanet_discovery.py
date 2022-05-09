@@ -9,8 +9,7 @@ from xgboost import XGBClassifier
 
 @st.cache
 def load_df(url):
-    df = pd.read_csv(url)
-    return df
+    return pd.read_csv(url)
 
 
 # option
@@ -32,7 +31,7 @@ categorie = st.sidebar.radio("Categories", ("Accueil", "Observer les Exoplanète
                                             "L'IA à l'aide des Astrophysicien"))
 
 st.sidebar.title(' ')
-option = st.sidebar.beta_expander("Options")
+option = st.sidebar.expander("Options")
 option.markdown(
     """
     L'option _Montre moi la data_ affichera les données 
@@ -40,7 +39,7 @@ option.markdown(
     """)
 show = option.checkbox('Montre moi la data')
 
-expander = st.sidebar.beta_expander("Sources")
+expander = st.sidebar.expander("Sources")
 expander.markdown(
     """
     __Les bases des données utilisées__ : 
@@ -62,7 +61,7 @@ expander.info('Hackathon organisé par la **WildCodeSchool** le 12/05/2021')
 
 # modifier selon la localisation de la BD
 phl_db = 'http://www.hpcf.upr.edu/~abel/phl/hec2/database/phl_exoplanet_catalog.csv'
-nea_db = 'https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/planets.csv'
+nea_db = './planets.csv'
 
 planets = load_df(nea_db)
 plan_hab = load_df(phl_db)
@@ -92,7 +91,7 @@ if categorie == 'Accueil':
         """
     )
 
-    col1, col2 = st.beta_columns(2)
+    col1, col2 = st.columns(2)
     with col1:
         st.title(" ")
         st.markdown(
@@ -129,7 +128,7 @@ if categorie == 'Accueil':
                                       bgcolor='rgba(0,0,0,0)',
                                       font=dict(size=12)))
         st.plotly_chart(fig, use_container_width=True)
-    
+
     st.markdown(
         """
         Nous vous proposons de partir ensemble pour un voyage dans les méandres de l’univers. 
@@ -139,32 +138,32 @@ if categorie == 'Accueil':
         """)
 
     st.title(" ")
-    col1, col2, col3 = st.beta_columns([1, 4, 1])
+    col1, col2, col3 = st.columns([1, 4, 1])
     with col2:
-        st.image("https://github.com/MickaelKohler/Exoplanet_Discovery/raw/main/Ressources/galaxy-red-green-illustration-wallpaper.png",
+        st.image("./Ressources/galaxy-red-green-illustration-wallpaper.png",
                  caption="Ceci n'est pas une exoplanète")
 
-    expander = st.beta_expander("Les technologies utilisées")
+    expander = st.expander("Les technologies utilisées")
     expander.write('Plusieurs librairies de _Python_ ont été utilisées pour la réalisation de ce site : ')
-    col1, col2, col3, col4 = expander.beta_columns(4)
+    col1, col2, col3, col4 = expander.columns(4)
     with col1:
         st.write('__Gestion des base de données__')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/tool_pandas.png')
+        st.image('./Ressources/tool_pandas.png')
     with col2:
         st.write('__Création du modèle de ML__')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1200px-Scikit_learn_logo_small.svg.png')
+        st.image('./Ressources/1200px-Scikit_learn_logo_small.svg.png')
     with col3:
         st.write('__Création des graphiques__')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/logo_plotly.png')
+        st.image('./Ressources/logo_plotly.png')
     with col4:
         st.write('__Création de la WebApp__')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/1*u9U3YjxT9c9A1FIaDMonHw.png')
+        st.image('./Ressources/1*u9U3YjxT9c9A1FIaDMonHw.png')
 
-    col1, col2 = expander.beta_columns([7, 1])
+    col1, col2 = expander.columns([7, 1])
     with col2:
         st.title(" ")
         st.write('_une production_')
-        st.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Logo%20pirate%20duck.png')
+        st.image('./Ressources/Logo%20pirate%20duck.png')
 
 
 elif categorie == "Observer les Exoplanètes":
@@ -206,8 +205,8 @@ elif categorie == "Observer les Exoplanètes":
     qui font varier la luminosité captée depuis la Terre.
     """)
 
-    col1, col2, col3 = st.beta_columns([1, 3, 1])
-    lk = 'https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/Astronomical_Transit.gif'
+    col1, col2, col3 = st.columns([1, 3, 1])
+    lk = './Ressources/Astronomical_Transit.gif'
     with col2:
         st.markdown(f"![Alt Text]({lk})")
 
@@ -242,7 +241,7 @@ elif categorie == "Observer les Exoplanètes":
                       yaxis_title="Nombre de planètes détéctées",
                       title_text='Max température par Date en fonction des opinions', title_x=0.5)
 
-    col1, col2 = st.beta_columns([2, 1])
+    col1, col2 = st.columns([2, 1])
     with col1:
         st.plotly_chart(fig, use_container_width=True)
     with col2:
@@ -282,7 +281,7 @@ elif categorie == "Les Exoplanètes habitables":
     fig.update_layout(title="<b>Où sont localisées les planètes habitables ?</b>",
                       margin=dict(l=10, r=10, b=10, t=40))
 
-    col1, col2 = st.beta_columns([3, 1])
+    col1, col2 = st.columns([3, 1])
     with col1:
         st.plotly_chart(fig, use_container_width=True)
     with col2:
@@ -354,8 +353,8 @@ elif categorie == "Les Exoplanètes habitables":
         margin=dict(l=10, r=10, b=10, t=70))
     st.plotly_chart(fig, use_container_width=True)
 
-    expander = st.beta_expander("Illustration de la zone habitable dans notre système solaire")
-    expander.image('https://raw.githubusercontent.com/MickaelKohler/Exoplanet_Discovery/main/Ressources/zone_habitable_systeme_solaire_espace_stellaire_1024x1024.jpg')
+    expander = st.expander("Illustration de la zone habitable dans notre système solaire")
+    expander.image('./Ressources/zone_habitable_systeme_solaire_espace_stellaire_1024x1024.jpg')
 
     st.markdown("---")
     
@@ -396,7 +395,7 @@ elif categorie == "Les Exoplanètes habitables":
         fig.data[i].text = t
 
     if show:
-        col1, col2 = st.beta_columns([1, 3])
+        col1, col2 = st.columns([1, 3])
         with col2:
             st.plotly_chart(fig, use_container_width=True)
         with col1:
@@ -405,7 +404,7 @@ elif categorie == "Les Exoplanètes habitables":
     else:
         st.plotly_chart(fig, use_container_width=True)
    
-    col1, col2 = st.beta_columns([1, 2])
+    col1, col2 = st.columns([1, 2])
     with col1:
         st.markdown(
             """
@@ -461,7 +460,7 @@ elif categorie == "Les Exoplanètes habitables":
         fig.data[i].text = t
 
     if show:
-        col1, col2 = st.beta_columns([3, 1])
+        col1, col2 = st.columns([3, 1])
         with col1:
             st.plotly_chart(fig, use_container_width=True)
         with col2:
@@ -516,7 +515,7 @@ elif categorie == "Les Exoplanètes habitables":
     for i, t in enumerate(texts):
         fig.data[i].text = t
 
-    col1, col2 = st.beta_columns([3, 1])
+    col1, col2 = st.columns([3, 1])
     with col1:
         st.plotly_chart(fig, use_container_width=True)
     with col2:
@@ -619,7 +618,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
     
     st.title(' ')
     ML_off = True
-    col1, col2 = st.beta_columns([1, 3])
+    col1, col2 = st.columns([1, 3])
     with col1:
         st.markdown(
             """
@@ -647,7 +646,7 @@ elif categorie == "L'IA à l'aide des Astrophysicien":
         else:
             st.dataframe(df_final, height=550)
 
-    expander = st.beta_expander("Explication du modèle retenu")
+    expander = st.expander("Explication du modèle retenu")
     expander.markdown(
         """
         ___Quel modèle a été retenu ?___
