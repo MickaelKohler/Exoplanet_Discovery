@@ -163,7 +163,7 @@ if categorie == 'Accueil':
     with col2:
         st.title(" ")
         st.write('_une production_')
-        st.image('./Ressources/Logo%20pirate%20duck.png')
+        st.image('./Ressources/Logo_pirate_duck.png')
 
 
 elif categorie == "Observer les Exoplanètes":
