@@ -206,7 +206,7 @@ elif categorie == "Observer les Exoplanètes":
     """)
 
     col1, col2, col3 = st.columns([1, 3, 1])
-    lk = './Ressources/Astronomical_Transit.gif'
+    lk = 'https://upload.wikimedia.org/wikipedia/commons/8/82/Astronomical_Transit.gif'
     with col2:
         st.markdown(f"![Alt Text]({lk})")
 
